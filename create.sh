@@ -25,7 +25,7 @@ create_xml()
 }
 
 
-TASKNAME=${1:-default normal}
+TASKNAME=${1:-normal}
 if [ "$TASKNAME" = "normal" ]; then
     TEST_DICT=false
     create_xml
