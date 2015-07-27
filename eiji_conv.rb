@@ -1,10 +1,9 @@
+# coding: utf-8
 # 英辞郎の英和辞書をMac OS X v10.5 "Leopard"の辞書アプリケーション（Dictionary.app）用に変換
 # v0.09 by Tats_y (http://www.binword.com/blog/)
 # 2011/04/10
 
-$KCODE = "UTF-8"
 require 'iconv'
-require 'jcode'
 require 'cgi'
 
 word_index = Hash.new
@@ -44,10 +43,9 @@ temp_array = Array.new
   $re_http = Regexp.new(http)	# URLチェック用の正規表現はグローバル変数
 
 
-iconv = Iconv.new('UTF-8', 'CP932')  #Windowsエンコードを変換するためCP932を指定
 while line = gets
-  next if line.strip.empty?
-  line1 = iconv.iconv(line)  #Shift_JISからUTF-8へ変換
+  #Shift_JISからUTF-8へ変換
+  line1 = line.encode('UTF-8', 'CP932', :invalid => :replace, :undef => :replace, :replace => '')
   temp_word = /^■/.match(/\s:\s/.match(line1).pre_match).post_match  #見出しと定義に分割
   if /\{.*\}/.match(temp_word).nil? then  #品詞が含まれているものはさらに分割
     temp_index = temp_word.strip
